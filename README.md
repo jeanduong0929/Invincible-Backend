@@ -2,6 +2,8 @@
 
 ## Technologies
 
-- Java 17
+- Java 8
 - Spring Boot
+- Hibernate / JPA
+- JWT
 - PostGreSQL
