@@ -2,12 +2,17 @@ package com.invincible.controller;
 
 import com.invincible.dtos.requests.RegisterRequest;
 import com.invincible.dtos.responses.Principal;
+import com.invincible.dtos.responses.UserResponse;
 import com.invincible.services.TokenService;
 import com.invincible.services.UserService;
+import com.invincible.utils.custom_exceptions.InvalidAuthException;
 import com.invincible.utils.custom_exceptions.InvalidRegisterException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -36,7 +41,8 @@ public class UserController {
                                 String token = tokenService.generateToken(principal);
                                 principal.setToken(token);
                             } else throw new InvalidRegisterException("Passwords do not match");
-                        } else throw new InvalidRegisterException("Password needs to be minimum 8 characters, at least 1 letter and 1 number");
+                        } else
+                            throw new InvalidRegisterException("Password needs to be minimum 8 characters, at least 1 letter and 1 number");
                     } else throw new InvalidRegisterException("Email is already in used");
                 } else throw new InvalidRegisterException("The email provided is invalid");
             } else throw new InvalidRegisterException("Username is already taken");
@@ -45,4 +51,14 @@ public class UserController {
         return principal;
     }
 
+    @GetMapping
+    public List<UserResponse> getAll(HttpServletRequest req) {
+        String token = req.getHeader("Auth-Token");
+        if (token == null) throw new InvalidAuthException("Invalid token");
+        if (token.isEmpty()) throw new InvalidAuthException("Invalid token");
+        Principal principal = tokenService.extractRequesterDetails(token);
+        if (principal == null) throw new InvalidAuthException("Invalid token");
+        if (!principal.getRole().equals("ADMIN")) throw new InvalidAuthException("You are unauthorized to do this");
+        return userService.getAllUsers();
+    }
 }

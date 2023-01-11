@@ -3,6 +3,7 @@ package com.invincible.services;
 import com.invincible.dtos.requests.LoginRequest;
 import com.invincible.dtos.requests.RegisterRequest;
 import com.invincible.dtos.responses.Principal;
+import com.invincible.dtos.responses.UserResponse;
 import com.invincible.entities.Role;
 import com.invincible.entities.User;
 import com.invincible.repositories.RoleRepository;
@@ -12,7 +13,9 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -42,6 +45,13 @@ public class UserService {
                 .findFirst();
 
         return registeredUser.map(Principal::new);
+    }
+
+    public List<UserResponse> getAllUsers() {
+        return userRepo.findAll()
+                .stream()
+                .map(UserResponse::new)
+                .collect(Collectors.toList());
     }
 
     // username must be 8-20 characters
