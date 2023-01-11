@@ -4,7 +4,7 @@ import com.invincible.dtos.requests.RegisterRequest;
 import com.invincible.dtos.responses.Principal;
 import com.invincible.services.TokenService;
 import com.invincible.services.UserService;
-import com.invincible.utils.custom_exceptions.RegisterException;
+import com.invincible.utils.custom_exceptions.InvalidRegisterException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +17,14 @@ public class UserController {
     private final TokenService tokenService;
 
     @PostMapping
-    @ExceptionHandler(RegisterException.class)
+    @ExceptionHandler(InvalidRegisterException.class)
     @ResponseStatus(HttpStatus.CREATED)
     public Principal register(@RequestBody RegisterRequest req) {
         String username = req.getUsername();
         String email = req.getEmail();
         String pwd1 = req.getPassword1();
         String pwd2 = req.getPassword2();
-        Principal principal = null;
+        Principal principal;
 
         if (userService.isValidUsername(username)) {
             if (userService.isUniqueUsername(username)) {
@@ -35,12 +35,12 @@ public class UserController {
                                 principal = userService.createNewUser(req);
                                 String token = tokenService.generateToken(principal);
                                 principal.setToken(token);
-                            } else throw new RegisterException("Passwords do not match");
-                        } else throw new RegisterException("Password needs to be minimum 8 characters, at least 1 letter and 1 number");
-                    } else throw new RegisterException("Email is already in used");
-                } else throw new RegisterException("The email provided is invalid");
-            } else throw new RegisterException("Username is already taken");
-        } else throw new RegisterException("Username needs to be 8-20 characters long");
+                            } else throw new InvalidRegisterException("Passwords do not match");
+                        } else throw new InvalidRegisterException("Password needs to be minimum 8 characters, at least 1 letter and 1 number");
+                    } else throw new InvalidRegisterException("Email is already in used");
+                } else throw new InvalidRegisterException("The email provided is invalid");
+            } else throw new InvalidRegisterException("Username is already taken");
+        } else throw new InvalidRegisterException("Username needs to be 8-20 characters long");
 
         return principal;
     }

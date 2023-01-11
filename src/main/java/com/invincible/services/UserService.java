@@ -27,7 +27,9 @@ public class UserService {
                 .filter(r -> r.getRole().equals("DEFAULT"))
                 .findFirst();
 
-        if (role.isEmpty()) throw new RoleNotFoundException("Creating new user failed because DEFAULT role is not established");
+        if (role.isEmpty())
+            throw new RoleNotFoundException("Creating new user failed because DEFAULT role is not established");
+
         User newUser = new User(req, role.get());
         userRepo.save(newUser);
         return new Principal(newUser);

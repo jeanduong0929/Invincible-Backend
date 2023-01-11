@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @NoArgsConstructor
-@ResponseStatus(HttpStatus.FORBIDDEN)
-public class RegisterException extends RuntimeException {
-    public RegisterException(String message) {
+@ResponseStatus(HttpStatus.UNAUTHORIZED)
+public class InvalidAuthException extends RuntimeException {
+    public InvalidAuthException(String message) {
         super(message);
     }
 }
