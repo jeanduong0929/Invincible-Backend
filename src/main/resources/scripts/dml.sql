@@ -14,5 +14,5 @@ VALUES ('e0438fd6-0f95-419b-8e04-3207d3e941f0', 'admin@gmail.com', 'admin', 'adm
 
 --- update
 UPDATE inv.in_user
-SET role_id = 'e0438fd6-0f95-419b-8e04-3207d3e941f1'
-WHERE username = 'admin';
+SET role_id = 'e0438fd6-0f95-419b-8e04-3207d3e941f0'
+WHERE username = 'bduong0929';

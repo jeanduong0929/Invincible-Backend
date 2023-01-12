@@ -34,13 +34,14 @@ public class UserService {
                     byte[] salt = u.getSalt();
                     byte[] hashedPassword = u.getPassword();
                     try {
-                        return Arrays.equals(hashedPassword, securityService.hashingMethod(req.getPassword(), salt));
+                        return u.getUsername().equals(req.getUsername()) &&
+                                Arrays.equals(hashedPassword, securityService.hashingMethod(req.getPassword(), salt));
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     }
                     return false;
-                }).map(Principal::new)
-                .findFirst();
+                }).findFirst()
+                .map(Principal::new);
     }
 
     /* ------------------------------ LISTS ------------------------------ */
