@@ -25,7 +25,10 @@ public class User {
     private String email;
 
     @Column(name = "password", nullable = false)
-    private String password;
+    private byte[] password;
+
+    @Column(name = "salt", nullable = false)
+    private byte[] salt;
 
     @ManyToOne
     @JoinColumn(name = "role_id", nullable = false)
@@ -36,7 +39,6 @@ public class User {
         this.id = UUID.randomUUID().toString();
         this.username = req.getUsername();
         this.email = req.getEmail();
-        this.password = req.getPassword1();
         this.role = role;
     }
 }

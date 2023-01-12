@@ -1,18 +1,16 @@
 package com.invincible.services;
 
 import com.invincible.dtos.requests.LoginRequest;
-import com.invincible.dtos.requests.RegisterRequest;
 import com.invincible.dtos.responses.Principal;
 import com.invincible.dtos.responses.UserResponse;
-import com.invincible.entities.Role;
 import com.invincible.entities.User;
-import com.invincible.repositories.RoleRepository;
 import com.invincible.repositories.UserRepository;
-import com.invincible.utils.custom_exceptions.RoleNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -21,31 +19,31 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class UserService {
+    private final SecurityService securityService;
     private final UserRepository userRepo;
-    private final RoleRepository roleRepo;
 
-    public Principal createNewUser(RegisterRequest req) {
-        Optional<Role> role = roleRepo.findAll()
-                .stream()
-                .filter(r -> r.getRole().equals("DEFAULT"))
-                .findFirst();
-
-        if (role.isEmpty())
-            throw new RoleNotFoundException("Creating new user failed because DEFAULT role is not established");
-
-        User newUser = new User(req, role.get());
+    public Principal createNewUser(User newUser) {
         userRepo.save(newUser);
         return new Principal(newUser);
     }
 
     public Optional<Principal> validateLogin(LoginRequest req) {
-        Optional<User> registeredUser = userRepo.findAll()
+        return userRepo.findAll()
                 .stream()
-                .filter(u -> u.getUsername().equals(req.getUsername()) && u.getPassword().equals(req.getPassword()))
+                .filter(u -> {
+                    byte[] salt = u.getSalt();
+                    byte[] hashedPassword = u.getPassword();
+                    try {
+                        return Arrays.equals(hashedPassword, securityService.hashingMethod(req.getPassword(), salt));
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    }
+                    return false;
+                }).map(Principal::new)
                 .findFirst();
-
-        return registeredUser.map(Principal::new);
     }
+
+    /* ------------------------------ LISTS ------------------------------ */
 
     public List<UserResponse> getAllUsers() {
         return userRepo.findAll()
@@ -53,6 +51,8 @@ public class UserService {
                 .map(UserResponse::new)
                 .collect(Collectors.toList());
     }
+
+    /* ------------------------------ BOOLEANS ------------------------------ */
 
     // username must be 8-20 characters
     public boolean isValidUsername(String username) {
