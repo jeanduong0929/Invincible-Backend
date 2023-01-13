@@ -1,5 +1,6 @@
 package com.invincible.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,17 +27,18 @@ public class Size {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
-    @JsonManagedReference
+    @JsonBackReference
     private Set<Product> products;
 
     // junction table: sizes -> quantities
     @ManyToMany
     @JoinTable(
+            name = "in_sizes_quantities",
             joinColumns = {
-                    @JoinColumn(name = "size_id", nullable = false)
+                    @JoinColumn(name = "size_id", referencedColumnName = "id", nullable = false)
             },
             inverseJoinColumns = {
-                    @JoinColumn(name = "quantity_id", nullable = false)
+                    @JoinColumn(name = "quantity_id", referencedColumnName = "id", nullable = false)
             }
     )
     @JsonManagedReference

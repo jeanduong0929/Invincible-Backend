@@ -1,5 +1,6 @@
 package com.invincible.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,6 +27,6 @@ public class Quantity {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL
     )
-    @JsonManagedReference
+    @JsonBackReference
     private Set<Size> sizes;
 }
