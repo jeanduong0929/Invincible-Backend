@@ -1,13 +1,27 @@
 package com.invincible.dtos.requests;
 
-import lombok.*;
+import lombok.ToString;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @ToString
 public class LoginRequest {
-    private String username;
-    private String password;
+  // FIELDS
+  private String username;
+  private String password;
+
+  // CONSTRUCTORS
+  public LoginRequest() {}
+
+  public LoginRequest(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
+
+  // GETTERS/SETTERS
+  public String getUsername() { return username; }
+
+  public void setUsername(String username) { this.username = username; }
+
+  public String getPassword() { return password; }
+
+  public void setPassword(String password) { this.password = password; }
 }

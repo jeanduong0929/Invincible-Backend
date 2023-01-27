@@ -1,17 +1,19 @@
 package com.invincible.dtos.requests;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.invincible.entities.Product;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.ToString;
 
-import java.util.List;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @ToString
 public class CategoryRequest {
-    private String category;
+  // FIELDS
+  private String category;
+
+  // CONSTRUCTORS
+  private CategoryRequest() {}
+
+  private CategoryRequest(String category) { this.category = category; }
+
+  // GETTERS/SETTERS
+  public String getCategory() { return category; }
+
+  public void setCategory(String category) { this.category = category; }
 }

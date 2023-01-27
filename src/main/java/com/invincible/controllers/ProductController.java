@@ -20,7 +20,8 @@ public class ProductController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Product addProduct(@RequestBody ProductRequest req, HttpServletRequest sreq) {
+  public Product addProduct(@RequestBody ProductRequest req,
+                            HttpServletRequest sreq) {
     String token = sreq.getHeader("Auth-Token");
     if (token == null)
       throw new InvalidAuthException("Invalid token");
