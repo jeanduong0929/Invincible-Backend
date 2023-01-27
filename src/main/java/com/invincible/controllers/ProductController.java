@@ -15,17 +15,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/product")
 public class ProductController {
-    private final ProductService prodService;
-    private final TokenService tokenService;
+  private final ProductService prodService;
+  private final TokenService tokenService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Product addProduct(@RequestBody ProductRequest req, HttpServletRequest sreq) {
-        String token = sreq.getHeader("Auth-Token");
-        if (token == null) throw new InvalidAuthException("Invalid token");
-        if (token.isEmpty()) throw new InvalidAuthException("Invalid token");
-        Principal principal = tokenService.extractRequesterDetails(token);
-        if (principal == null) throw new InvalidAuthException("Invalid token");
-        return prodService.createProduct(req);
-    }
+  @PostMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public Product addProduct(@RequestBody ProductRequest req, HttpServletRequest sreq) {
+    String token = sreq.getHeader("Auth-Token");
+    if (token == null)
+      throw new InvalidAuthException("Invalid token");
+    if (token.isEmpty())
+      throw new InvalidAuthException("Invalid token");
+    Principal principal = tokenService.extractRequesterDetails(token);
+    if (principal == null)
+      throw new InvalidAuthException("Invalid token");
+    return prodService.createProduct(req);
+  }
 }
