@@ -8,9 +8,9 @@ public class CategoryRequest {
   private String category;
 
   // CONSTRUCTORS
-  private CategoryRequest() {}
+  public CategoryRequest() {}
 
-  private CategoryRequest(String category) { this.category = category; }
+  public CategoryRequest(String category) { this.category = category; }
 
   // GETTERS/SETTERS
   public String getCategory() { return category; }

@@ -7,17 +7,30 @@ import com.invincible.services.ProductService;
 import com.invincible.services.TokenService;
 import com.invincible.utils.custom_exceptions.InvalidAuthException;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@AllArgsConstructor
 @RestController
 @RequestMapping(value = "/product")
 public class ProductController {
+  // FIELDS
   private final ProductService prodService;
   private final TokenService tokenService;
 
+  // CONSTRUCTORS
+  public ProductController(ProductService productService,
+                           TokenService tokenService) {
+    this.prodService = productService;
+    this.tokenService = tokenService;
+  }
+
+  @GetMapping
+  public List<Product> getAll() {
+    return prodService.getAllProducts();
+  }
+
+  // HANDLERS
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public Product addProduct(@RequestBody ProductRequest req,
