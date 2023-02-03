@@ -1,7 +1,7 @@
 -- ###################
 -- ##     ROLE      ##
 -- ###################
---- INSERT
+
 INSERT INTO
   inv.in_role (id, role)
 VALUES
@@ -15,8 +15,7 @@ VALUES
 -- ###################
 -- ##     USER      ##
 -- ###################
---- INSERT
---- UPDATE
+
 UPDATE inv.in_user
 SET
   role_id = 'e0438fd6-0f95-419b-8e04-3207d3e941f0'
@@ -26,7 +25,7 @@ WHERE
 -- #######################
 -- ##     CATEGORY      ##
 -- #######################
---- INSERT
+
 INSERT INTO
   inv.in_category (id, category)
 VALUES
@@ -35,14 +34,14 @@ VALUES
 -- ######################
 -- ##     PRODUCT      ##
 -- ######################
---- INSERT
+
 INSERT INTO
   inv.in_product (id, price, product, category_id)
 VALUES
   (
     'e0438fd6-0f95-419b-8e04-3207d3e941f0',
     59.99,
-    'Invincible Black Boxie Tee',
+    'Invincible Black Boxy Tee',
     'e0438fd6-0f95-419b-8e04-3207d3e941f0'
   );
 
@@ -51,6 +50,7 @@ VALUES
 -- ###################
 -- ##     SIZE      ##
 -- ###################
+
 INSERT INTO
   inv.in_size (id, size)
 VALUES
@@ -69,7 +69,7 @@ VALUES
 -- #######################
 -- ##     QUANTITY      ##
 -- #######################
---- INSERT
+
 INSERT INTO
   inv.in_quantity (id, quantity)
 VALUES
@@ -83,7 +83,7 @@ VALUES
 -- ############################
 -- ##     PRODUCTS_SIZE      ##
 -- ############################
---- INSERT
+
 INSERT INTO
   inv.in_products_sizes (product_id, size_id)
 VALUES
@@ -95,7 +95,7 @@ VALUES
 -- ###############################
 -- ##     SIZES_QUANTITIES      ##
 -- ###############################
---- INSERT
+
 INSERT INTO
   inv.in_sizes_quantities (size_id, quantity_id)
 VALUES

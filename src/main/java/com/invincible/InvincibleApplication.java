@@ -8,6 +8,5 @@ public class InvincibleApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(InvincibleApplication.class, args);
-
   }
 }

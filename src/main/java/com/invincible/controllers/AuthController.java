@@ -14,7 +14,6 @@ import com.invincible.utils.custom_exceptions.InvalidRegisterException;
 import com.invincible.utils.custom_exceptions.RoleNotFoundException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +27,8 @@ public class AuthController {
   private final RoleService roleService;
 
   public AuthController(TokenService tokenService, UserService userService,
-                        SecurityService securityService,
-                        RoleService roleService) {
+      SecurityService securityService,
+      RoleService roleService) {
     this.tokenService = tokenService;
     this.userService = userService;
     this.securityService = securityService;
@@ -82,8 +81,7 @@ public class AuthController {
 
                 try { // encrypt user's password
                   byte[] salt = securityService.generateSalt();
-                  byte[] hashedPassword =
-                      securityService.hashingMethod(req.getPassword1(), salt);
+                  byte[] hashedPassword = securityService.hashingMethod(req.getPassword1(), salt);
                   newUser.setSalt(salt);
                   newUser.setPassword(hashedPassword);
                 } catch (NoSuchAlgorithmException e) {
