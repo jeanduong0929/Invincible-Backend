@@ -27,8 +27,8 @@ public class AuthController {
   private final RoleService roleService;
 
   public AuthController(TokenService tokenService, UserService userService,
-      SecurityService securityService,
-      RoleService roleService) {
+                        SecurityService securityService,
+                        RoleService roleService) {
     this.tokenService = tokenService;
     this.userService = userService;
     this.securityService = securityService;
@@ -54,7 +54,6 @@ public class AuthController {
   }
 
   @PostMapping("/register")
-  @ExceptionHandler(InvalidRegisterException.class)
   @ResponseStatus(HttpStatus.CREATED)
   public Principal register(@RequestBody RegisterRequest req) {
     String username = req.getUsername();
@@ -81,7 +80,8 @@ public class AuthController {
 
                 try { // encrypt user's password
                   byte[] salt = securityService.generateSalt();
-                  byte[] hashedPassword = securityService.hashingMethod(req.getPassword1(), salt);
+                  byte[] hashedPassword =
+                      securityService.hashingMethod(req.getPassword1(), salt);
                   newUser.setSalt(salt);
                   newUser.setPassword(hashedPassword);
                 } catch (NoSuchAlgorithmException e) {
@@ -110,5 +110,12 @@ public class AuthController {
           "Username needs to be 8-20 characters long");
 
     return principal;
+  }
+
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  @ExceptionHandler(value = {InvalidRegisterException.class})
+  public InvalidRegisterException
+  handledRegisterException(InvalidRegisterException e) {
+    return e;
   }
 }

@@ -5,6 +5,7 @@ import com.invincible.dtos.responses.Principal;
 import com.invincible.entities.Product;
 import com.invincible.services.ProductService;
 import com.invincible.services.TokenService;
+import com.invincible.utils.custom_exceptions.CategoryNotFoundException;
 import com.invincible.utils.custom_exceptions.InvalidAuthException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -31,6 +32,16 @@ public class ProductController {
     return prodService.getAllProducts();
   }
 
+  @GetMapping("/category")
+  public List<Product> getProductsByCategory(@RequestParam String category) {
+    return prodService.getProductByCategory(category);
+  }
+
+  @GetMapping("/id")
+  public Product getProductById(@RequestParam String id) {
+    return prodService.getProductById(id);
+  }
+
   // HANDLERS
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
@@ -45,5 +56,12 @@ public class ProductController {
     if (principal == null)
       throw new InvalidAuthException("Invalid token");
     return prodService.createProduct(req);
+  }
+
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(value = {CategoryNotFoundException.class})
+  public CategoryNotFoundException
+  handledCategoryNotFoundException(CategoryNotFoundException e) {
+    return e;
   }
 }
