@@ -44,6 +44,11 @@ public class Product {
   @JsonManagedReference
   private Set<Size> sizes;
 
+  @ManyToMany(mappedBy = "products", cascade = CascadeType.ALL,
+              fetch = FetchType.EAGER)
+  @JsonBackReference
+  private Set<Cart> carts;
+
   // CONSTRUCTORS
   public Product() {}
 

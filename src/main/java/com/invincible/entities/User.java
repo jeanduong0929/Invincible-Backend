@@ -21,6 +21,10 @@ public class User {
 
   @Column(name = "salt", nullable = false) private byte[] salt;
 
+  @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
+            mappedBy = "user")
+  private Cart cart;
+
   @ManyToOne
   @JoinColumn(name = "role_id", nullable = false)
   @JsonBackReference

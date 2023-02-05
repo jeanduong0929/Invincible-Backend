@@ -25,7 +25,7 @@ public class SizeService {
     Optional<Product> products =
         prodRepo.findAll()
             .stream()
-            .filter(p -> p.getId().equals(req.getClothing_id()))
+            .filter(p -> p.getId().equals(req.getProductId()))
             .findFirst();
 
     if (products.isEmpty())
