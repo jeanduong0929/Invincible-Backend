@@ -27,7 +27,7 @@ public class ProductController {
     this.tokenService = tokenService;
   }
 
-  @GetMapping
+  @GetMapping("/all")
   public List<Product> getAll() {
     return prodService.getAllProducts();
   }

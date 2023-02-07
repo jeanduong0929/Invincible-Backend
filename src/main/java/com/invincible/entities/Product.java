@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.invincible.dtos.requests.ProductRequest;
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ public class Product {
 
   @Column(name = "product", nullable = false) private String product;
 
-  @Column(name = "price", nullable = false) private int price;
+  @Column(name = "price", nullable = false) private BigDecimal price;
 
   @ManyToOne
   @JoinColumn(name = "category_id", nullable = false
@@ -68,9 +69,9 @@ public class Product {
 
   public void setProduct(String product) { this.product = product; }
 
-  public int getPrice() { return price; }
+  public BigDecimal getPrice() { return price; }
 
-  public void setPrice(int price) { this.price = price; }
+  public void setPrice(BigDecimal price) { this.price = price; }
 
   public Category getCategory() { return category; }
 
@@ -79,4 +80,8 @@ public class Product {
   public Set<Size> getSizes() { return sizes; }
 
   public void setSizes(Set<Size> sizes) { this.sizes = sizes; }
+
+  public Set<Cart> getCarts() { return carts; }
+
+  public void setCarts(Set<Cart> carts) { this.carts = carts; }
 }

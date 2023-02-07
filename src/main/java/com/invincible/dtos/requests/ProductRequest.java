@@ -1,35 +1,33 @@
 package com.invincible.dtos.requests;
 
+import java.math.BigDecimal;
 import lombok.ToString;
 
 @ToString
 public class ProductRequest {
   // FIELDS
   private String product;
-  private int price;
-  private String category_id;
+  private BigDecimal price;
+  private String categoryId;
 
   // CONSTRUCTORS
   public ProductRequest() {}
 
-  public ProductRequest(String product, int price, String category_id) {
+  public ProductRequest(String product, BigDecimal price, String categoryId) {
     this.product = product;
     this.price = price;
-    this.category_id = category_id;
+    this.categoryId = categoryId;
   }
 
-  // GETTERS/SETTERS
   public String getProduct() { return product; }
 
   public void setProduct(String product) { this.product = product; }
 
-  public int getPrice() { return price; }
+  public BigDecimal getPrice() { return price; }
 
-  public void setPrice(int price) { this.price = price; }
+  public void setPrice(BigDecimal price) { this.price = price; }
 
-  public String getCategory_id() { return category_id; }
+  public String getCategoryId() { return categoryId; }
 
-  public void setCategory_id(String category_id) {
-    this.category_id = category_id;
-  }
+  public void setCategoryId(String categoryId) { this.categoryId = categoryId; }
 }

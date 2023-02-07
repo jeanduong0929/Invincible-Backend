@@ -51,7 +51,7 @@ public class ProductService {
     Optional<Category> category =
         catRepo.findAll()
             .stream()
-            .filter(c -> c.getId().equals(req.getCategory_id()))
+            .filter(c -> c.getId().equals(req.getCategoryId()))
             .findFirst();
 
     if (category.isEmpty())
