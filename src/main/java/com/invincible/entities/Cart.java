@@ -2,6 +2,7 @@ package com.invincible.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.invincible.dtos.requests.CartRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -12,6 +13,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Set;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 
@@ -45,6 +47,12 @@ public class Cart {
   private Set<Product> products;
 
   public Cart() {}
+
+  public Cart(CartRequest req, User user) {
+    this.id = UUID.randomUUID().toString();
+    this.quantity = req.getQuantity();
+    this.user = user;
+  }
 
   public String getId() { return id; }
 

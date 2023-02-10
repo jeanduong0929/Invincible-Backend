@@ -1,5 +1,6 @@
 package com.invincible.dtos.responses;
 
+import com.invincible.entities.Cart;
 import com.invincible.entities.User;
 import lombok.ToString;
 
@@ -10,6 +11,7 @@ public class UserResponse {
   private String username;
   private String email;
   private String role;
+  private Cart cart;
 
   // CONSTRUCTORS
   public UserResponse() {}
@@ -19,13 +21,7 @@ public class UserResponse {
     this.username = user.getUsername();
     this.email = user.getEmail();
     this.role = user.getRole().getRole();
-  }
-
-  public UserResponse(String id, String username, String email, String role) {
-    this.id = id;
-    this.username = username;
-    this.email = email;
-    this.role = role;
+    this.cart = user.getCart();
   }
 
   // GETTERS/SETTERS
@@ -44,4 +40,8 @@ public class UserResponse {
   public String getRole() { return role; }
 
   public void setRole(String role) { this.role = role; }
+
+  public Cart getCart() { return cart; }
+
+  public void setCart(Cart cart) { this.cart = cart; }
 }

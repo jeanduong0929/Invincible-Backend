@@ -1,6 +1,7 @@
 package com.invincible.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.invincible.dtos.requests.RegisterRequest;
 import jakarta.persistence.*;
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class User {
 
   @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER,
             mappedBy = "user")
+  @JsonManagedReference
   private Cart cart;
 
   @ManyToOne
@@ -70,6 +72,10 @@ public class User {
   public byte[] getSalt() { return salt; }
 
   public void setSalt(byte[] salt) { this.salt = salt; }
+
+  public Cart getCart() { return cart; }
+
+  public void setCart(Cart cart) { this.cart = cart; }
 
   public Role getRole() { return role; }
 
