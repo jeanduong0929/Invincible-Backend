@@ -2,7 +2,7 @@ package com.invincible.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.invincible.dtos.requests.CartRequest;
+import com.invincible.dtos.requests.CartUserRequest;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,7 +11,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.math.BigDecimal;
 import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -48,7 +47,7 @@ public class Cart {
 
   public Cart() {}
 
-  public Cart(CartRequest req, User user) {
+  public Cart(CartUserRequest req, User user) {
     this.id = UUID.randomUUID().toString();
     this.quantity = req.getQuantity();
     this.user = user;
